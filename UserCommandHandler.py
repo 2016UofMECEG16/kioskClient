@@ -24,7 +24,7 @@ class UserCommandHandler:
 		    "2": self.connect,
 		    "3": self.disconnect,
 		    "4": self.quit,
-		    "5": self.showThreads}
+		    "5": self.register}
 		takeaction.get(theCommand, self.errhandler)()    
 
 	def start (self):
@@ -45,6 +45,9 @@ class UserCommandHandler:
 		self.myClient.stopClient()
 		self.myUI.display("User: Quitting program.")
 		sys.exit(0)
+
+	def register (self, line):
+		self.myClient.sendMessageToServer(line)
 
 	def errhandler (self):
 		self.myUI.display("User: Your input has not been recognised")

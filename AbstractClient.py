@@ -36,7 +36,7 @@ class AbstractClient(Thread):
     def startClient(self):
         try:
             self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.start()
+            
         except Exception as e:
             raise e
             sys.exit(0) 
@@ -59,6 +59,7 @@ class AbstractClient(Thread):
                 self.setDoConnect(True)
                 self.s.settimeout(500)
                 self.s.connect((self.HOST, self.PORT))
+                self.start()
             except Exception as e:
                 raise e
                 sys.exit(0)
@@ -108,4 +109,3 @@ class AbstractClient(Thread):
         while self.doConnect:
             msg = self.getMessageFromServer()
             self.handleMessageFromServer(msg)
-        return

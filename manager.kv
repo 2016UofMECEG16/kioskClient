@@ -1,0 +1,101 @@
+MyScreenManager:
+	fullscreen: True
+	AdminMenu:
+	Start:
+	InsertCard:
+	NewCustomerMenu:
+	ExistingCustomerMenu:
+	BalanceUpdate:
+
+<AdminMenu>:
+	name: "adminmenu"
+	BoxLayout:
+		
+		Button:
+			on_release: app.root.current = "start"
+			text: "To Start"
+			font_size: 50
+		Button:
+			on_release: app.root.updateCommand(); app.root.myCommand.execute('1');
+			text: "Start Socket"
+			font_size: 50
+		Button:
+			on_release: app.root.myCommand.execute('2');
+			text: "Connect"
+			font_size: 50
+
+<Start>:
+	name: "start"
+	GridLayout:
+		Label:
+			font_size: 50
+			pos: 210, 500
+			text: "Registering New Pass"
+		Label:
+			font_size: 35
+			pos: 50, 370
+			text: "CID"
+		Label:
+			font_size: 35
+			pos: 50, 270
+			text: "E-mail"
+		Label:
+			font_size: 35
+			pos: 50, 170
+			text: "Balance"
+
+		Label:
+			font_size: 30
+			pos: 240, 375
+			text: "0000000001"
+
+		TextInput
+			width: sp(500)
+			height: 80
+			pos: 200, 275
+	        multiline: False
+	        text: 'villard@myumanitoba.ca'
+	        font_size: 30
+
+	    TextInput
+			width: sp(200)
+			height: 80
+			pos: 200, 175
+	        multiline: False
+	        text: '20.00'
+	        font_size: 30
+
+	    Button
+	    	on_release: app.root.register()
+	    	pos: 50, 40
+	    	font_size: 30
+	    	width: sp(200)
+	    	text: "Register"
+
+<InsertCard>:
+	name: "insertcard"
+	Button:
+		on_release: app.root.current = "adminmenu"
+		text: "To Admin Menu"
+		font_size: 50
+
+<NewCustomerMenu>:
+	name: "newcustomermenu"
+	Button:
+		on_release: app.root.current = "adminmenu"
+		text: "To Admin Menu"
+		font_size: 50
+
+<ExistingCustomerMenu>:
+	name: "existingcustomermenu"
+	Button:
+		on_release: app.root.current = "adminmenu"
+		text: "To Admin Menu"
+		font_size: 50
+
+<BalanceUpdate>:
+	name: "balanceupdate"
+	Button:
+		on_release: app.root.current = "adminmenu"
+		text: "To Admin Menu"
+		font_size: 50
