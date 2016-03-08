@@ -4,32 +4,26 @@
 #																					   #
 ########################################################################################
 
-import TextUI
 import KivyUI
 import UserCommandHandler
 import Client
 import ServerCommandHandler
+
 from threading import Thread
 
+# scannerIP = '192.169.0.32'
+# scannerIP = '10.42.0.49'
+scannerIP = 'localhost'
+
 def Main():
-	myKivyUI = KivyUI.KivyUI()
-	#myUI = TextUI.TextUI()
-
-	myServerCommand2 = ServerCommandHandler.ServerCommandHandler(myKivyUI)
-	#myServerCommand = ServerCommandHandler.ServerCommandHandler(myUI)
-	
-	myClient2 = Client.Client('localhost', 5555, myServerCommand2)
-	#myClient = Client.Client('localhost', 5555, myServerCommand)
-
-	myCommand2 = UserCommandHandler.UserCommandHandler(myKivyUI, myClient2)
-	#myCommand = UserCommandHandler.UserCommandHandler(myUI, myClient)
-	
-	myKivyUI.setCommand(myCommand2)
-	#myUI.setCommand(myCommand)
-	
+	myKivyUI			= KivyUI.KivyUI()
+	myServerCommand		= ServerCommandHandler.ServerCommandHandler(myKivyUI)
+	myClient			= Client.Client('', 5555, myServerCommand)
+	myScannerCommand	= ServerCommandHandler.ServerCommandHandler(myKivyUI)
+	myKiosk				= Client.Client(scannerIP, 5556, myScannerCommand)
+	myCommand			= UserCommandHandler.UserCommandHandler(myKivyUI, myClient, myKiosk)
+	myKivyUI.setCommand(myCommand)
 	myKivyUI.run()
-	#myUIThread = myUI.start()
-	#myUI.display("1:\tStart Client\n2:\tConnect\n3:\tDisconnect\n4:\tQuit\n");
 
 if __name__ == '__main__':
 	Main()

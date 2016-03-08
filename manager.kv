@@ -1,101 +1,846 @@
 MyScreenManager:
+	id: screen_manager
 	fullscreen: True
-	AdminMenu:
-	Start:
-	InsertCard:
-	NewCustomerMenu:
-	ExistingCustomerMenu:
-	BalanceUpdate:
+	allow_stretch: True
 
-<AdminMenu>:
-	name: "adminmenu"
-	BoxLayout:
-		
-		Button:
-			on_release: app.root.current = "start"
-			text: "To Start"
-			font_size: 50
-		Button:
-			on_release: app.root.updateCommand(); app.root.myCommand.execute('1');
-			text: "Start Socket"
-			font_size: 50
-		Button:
-			on_release: app.root.myCommand.execute('2');
-			text: "Connect"
-			font_size: 50
+	Bootup:
+		id: bootup
+		name: 'Bootup'
+	DemoMenu:
+		id: demo_menu
+		name: 'DemoMenu'
+		scanner_status: root.scn_sts
+		connection_status: root.con_sts
+	ServerSettings:
+		id: server_settings
+		name: 'ServerSettings'
+		scanner_status: root.scn_sts
+		connection_status: root.con_sts	
+	ScannerSettings:
+		id: scanner_settings
+		name: 'ScannerSettings'
+		scanner_status: root.scn_sts
+		connection_status: root.con_sts	
+	CustomerStart:
+		id: customer_start
+		name: 'CustomerStart'
+	CustomerMenu:
+		id: customer_menu
+		name: 'CustomerMenu'
+		connection_status: root.con_sts
+	CustomerInsertBlank:
+		id: customer_insert_blank
+		name: 'CustomerInsertBlank'
+		message_label: root.messageLabel
+	CustomerInsertExist:
+		id: customer_insert_exist
+		name: 'CustomerInsertExist'
+		message_label: root.messageLabel
+	CustomerRegisterPay:
+		id: customer_register_pay
+		name: 'CustomerRegisterPay'
+		purchase_label: root.purchase
+		email_label: root.email
+	CustomerUpdatePay:
+		id: customer_update_pay
+		name: 'CustomerUpdatePay'
+		purchase_label: root.purchase
+		email_label: root.email
+	CustomerRegister:
+		id: customer_register
+		name: 'CustomerRegister'
+		purchase_label: '0.00'
+		message_label: root.messageLabel
+	CustomerMenuExist:
+		id: customer_menu_exist
+		name: 'CustomerMenuExist'
+	CustomerInfo:
+		id: customer_info
+		name: 'CustomerInfo'
+		cid_label: root.CIDLabel
+		balance_label: root.balanceLabel
+		email_label: root.emailLabel
+		message_label: root.messageLabel
+		device_label: root.deviceLabel
+	CustomerUpdateBalance:
+		id: customer_update_balance
+		name: 'CustomerUpdateBalance'
+		cid_label: root.CIDLabel
+		balance_label: root.balanceLabel
+		email_label: root.emailLabel
+		purchase_label: '0.00'
+	CustomerDelete:
+		id: customer_delete_customer
+		name: 'CustomerDelete'
+		message_label: root.messageLabel
 
-<Start>:
-	name: "start"
-	GridLayout:
-		Label:
-			font_size: 50
-			pos: 210, 500
-			text: "Registering New Pass"
-		Label:
-			font_size: 35
-			pos: 50, 370
-			text: "CID"
-		Label:
-			font_size: 35
-			pos: 50, 270
-			text: "E-mail"
-		Label:
-			font_size: 35
-			pos: 50, 170
-			text: "Balance"
+<FloatLayout>
+	canvas:
+		Color:
+			rgba: (49./255, 56./255, 67./255, 1)
+		Rectangle:
+			pos: self.pos
+			size: self.size
+<Button>:
+	color: 49./255, 56./255, 67./255, 1
+	font_size: 18
+	font_name: 'nevis'
+	size_hint: 0.275, 0.15
+	background_normal: ''
+	background_color: (191./255, 219./255, 211./255, 1)
+<DemoButton@Button>:
+	size_hint: 0.2, 0.1
+<TextInput>:
+	font_name: 'nevis'
+<Label>:
+	font_name: 'nevis'
+<Title@Label>:
+	font_size: 45
+	size_hint: (None, None)
+	pos_hint: {'center_x':0.5, 'center_y':0.9}
+<CLabel@Label>:
+	size_hint: (None, None)
+	font_size: 30
+	halign: 'left'
+<CAttr@Label>:
+	size_hint: (None, None)
+	font_size: 30
+	halign: 'right'
+<CInput@TextInput>:
+	size_hint: (None, None)
+	font_size: 30
+	multiline: False
+<BalIncr@Button>:
+	color: 49./255, 56./255, 67./255, 1
+	font_size: 16
+	font_name: 'nevis'
+	size_hint: 0.07, 0.07
+	background_normal: ''
+	background_color: (191./255, 219./255, 211./255, 1)
+<StatLabel@Label>:
+	font_size: 20
+	size_hint: (None, None)
 
-		Label:
+<Bootup>:
+	FloatLayout:
+		Title: 
+			text: "Admin Login"
+		Label: 
+			text: "Login"
+			font_size: 40
+			pos_hint: {'x':0.5, 'center_y':0.6}
+			size_hint: (None, None)
+			text_size: root.width, None
+			halign: 'left'
+		Label: 
+			text: "Password"
+			font_size: 40
+			pos_hint: {'x':0.5, 'center_y':0.5}
+			size_hint: (None, None)
+			text_size: root.width, None
+			halign: 'left'
+		TextInput: 
+			id: username
+			width: sp(425)
+			height: 45
+			pos_hint: {'x':0.295, 'center_y':0.6}
+			multiline: False
+			text: "admin"
+			size_hint: (None, None)
 			font_size: 30
-			pos: 240, 375
-			text: "0000000001"
+			padding: [6,6,6,0]
+			input_type: 'number'
+		TextInput: 
+			id: password
+			width: sp(425)
+			height: 45
+			pos_hint: {'x':0.295, 'center_y':0.5}
+			multiline: False
+			text: 'password'
+			size_hint: (None, None)
+			font_size: 30
+			padding: [6,6,6,0]
+			password: True
+		Button: 
+			text: "Login"
+			on_release:
+				root.login(app.login(username.text, password.text))
+				app.root.updateScannerStatus(app.scannerStatus)
+				app.root.updateConnectionStatus(app.connectionStatus)
+			pos_hint: {"x":0.65, "top":0.3}
+		Label: 
+			text: root.fail_text
+			font_size: 25
+			pos_hint: {'center_x':0.5, 'center_y':0.4}
+			size_hint: (None, None)
 
-		TextInput
-			width: sp(500)
-			height: 80
-			pos: 200, 275
-	        multiline: False
-	        text: 'villard@myumanitoba.ca'
-	        font_size: 30
+<DemoMenu>:
+	FloatLayout:
+		Title:
+			text: "G16 Capstone Demo UI"
+		StatLabel:
+			id: scanner_status
+			pos_hint: {'center_x':0.5, 'center_y':0.05}
+			text_size: root.width-50, None
+			text: 'Scanner: ' + root.scanner_status
+			halign: 'left'
+		StatLabel:
+			id: connection_status
+			pos_hint: {'center_x':0.5, 'center_y':0.05}
+			text_size: root.width-50, None
+			text: 'Server: ' + root.connection_status
+			halign: 'right'
+		Button:
+			text: "Connection Settings"
+			on_release: app.root.current = "ServerSettings"
+			pos_hint: {"center_x": 0.225, 'center_y': 0.725}
+		Button:
+			text: "Scanner Settings"
+			on_release: app.root.current = "ScannerSettings"
+			pos_hint: {"center_x": 0.225, 'center_y': 0.55}
+		Button:
+			text: "Customer Menu"
+			on_release: 
+				app.root.animate()
+			pos_hint: {"center_x": 0.225, 'center_y': 0.375}
+		Button:
+			text: "Blank Card"
+			on_release: app.blankCard()
+			pos_hint: {"center_x": 0.225, 'center_y': 0.2}
+		CAttr:
+			text: "Connection settings for the database server."
+			pos_hint: {'center_x':0.675, 'center_y':0.725}
+			text_size: (root.width-150)*2/3, None
+			font_size: 18
+			halign: 'center'
+		CAttr:
+			text: "Connection settings for the scanner."
+			pos_hint: {'center_x':0.675, 'center_y':0.55}
+			text_size: (root.width-150)*2/3, None
+			font_size: 18
+			halign: 'center'
+		CAttr:
+			text: "Go to customer menu."
+			pos_hint: {'center_x':0.675, 'center_y':0.375}
+			text_size: (root.width-150)*2/3, None
+			font_size: 18
+			halign: 'center'
+		CAttr:
+			text: "Blank card for E-Pass use."
+			pos_hint: {'center_x':0.675, 'center_y':0.2}
+			text_size: (root.width-150)*2/3, None
+			font_size: 18
+			halign: 'center'
+<ServerSettings>:
+	FloatLayout:
+		Title:
+			text: "Connection Settings"
+		StatLabel:
+			id: scanner_status
+			pos_hint: {'center_x':0.5, 'center_y':0.05}
+			text_size: root.width-50, None
+			text: 'Scanner: ' + root.scanner_status
+			halign: 'left'
+		StatLabel:
+			id: connection_status
+			pos_hint: {'center_x':0.5, 'center_y':0.05}
+			text_size: root.width-50, None
+			text: 'Server: ' + root.connection_status
+			halign: 'right'
+		Label:
+			text: "Target Host"
+			font_size: 25
+			pos_hint: {'x':0.5, 'center_y':0.7}
+			size_hint: (None, None)
+			text_size: root.width, None
+			halign: 'left'
+		TextInput:
+			id: HOST
+			width: sp(250)
+			height: 45
+			pos_hint: {'x':0.300, 'center_y':0.7}
+			multiline: False
+			text: '192.169.0.24'
+			size_hint: (None, None)
+			font_size: 30
+			padding: [6,6,6,0]
+		Label:
+			text: "Server Login"
+			font_size: 25
+			pos_hint: {'x':0.5, 'center_y':0.6}
+			size_hint: (None, None)
+			text_size: root.width, None
+			halign: 'left'
+		TextInput:
+			id: SLOGIN
+			width: sp(250)
+			height: 45
+			pos_hint: {'x':0.300, 'center_y':0.6}
+			multiline: False
+			text: 'kiosk'
+			size_hint: (None, None)
+			font_size: 30
+			padding: [6,6,6,0]
+		Label:
+			text: "Server Password"
+			font_size: 25
+			pos_hint: {'x':0.5, 'center_y':0.5}
+			size_hint: (None, None)
+			text_size: root.width, None
+			halign: 'left'
+		TextInput:
+			id: SPASSWORD
+			width: sp(250)
+			height: 45
+			pos_hint: {'x':0.300, 'center_y':0.5}
+			multiline: False
+			text: 'Capstone2015Kiosk'
+			size_hint: (None, None)
+			font_size: 30
+			padding: [6,6,6,0]
+		Button:
+			id: CONNECTED
+			text: "Connect"
+			on_press:
+				self.disabled = True;
+			on_release:
+				app.setHost(HOST.text);
+				app.myCommand.execute('c1');
+				app.serverConnect(SLOGIN.text, SPASSWORD.text);
+				app.updateConnectionStatus();
+				app.root.updateConnectionStatus(app.connectionStatus);
+				DISCONNECTED.disabled = False;
+			pos_hint: {"x": 0.65, 'top': 0.75}
+	    Button:
+	    	id: DISCONNECTED
+	    	text: "Disconnect"
+	    	disabled: True
+	    	on_press:
+	    		self.disabled = True;
+	    	on_release:
+	    		app.serverDisconnect()
+				app.updateConnectionStatus()
+				app.root.updateConnectionStatus(app.connectionStatus)
+				CONNECTED.disabled = False;
+			pos_hint: {"x": 0.65, "top":0.575}
+		Button:
+			text: "Back to Demo Menu"
+			on_release: app.root.current = "DemoMenu"
+			pos_hint: {"x":0.65, "top":0.4}
 
-	    TextInput
-			width: sp(200)
-			height: 80
-			pos: 200, 175
-	        multiline: False
-	        text: '20.00'
-	        font_size: 30
+<ScannerSettings>:
+	FloatLayout:
+		Title:
+			text: "Scanner Settings"
+		StatLabel:
+			id: scanner_status
+			pos_hint: {'center_x':0.5, 'center_y':0.05}
+			text_size: root.width-50, None
+			text: 'Scanner: ' + root.scanner_status
+			halign: 'left'
+		StatLabel:
+			id: connection_status
+			pos_hint: {'center_x':0.5, 'center_y':0.05}
+			text_size: root.width-50, None
+			text: 'Server: ' + root.connection_status
+			halign: 'right'
+		Button:
+			id: CONNECTED
+			text: "Connect"
+			on_press:
+				self.disabled = True;
+			on_release:
+				app.myCommand.execute('s1')
+				app.myCommand.execute('s2')
+				app.updateScannerStatus();
+				app.root.updateScannerStatus(app.scannerStatus);
+				DISCONNECTED.disabled = False;
+			pos_hint: {"x": 0.65, 'top': 0.75}
+	    Button:
+	    	id: DISCONNECTED
+	    	text: "Disconnect"
+	    	disabled: True
+	    	on_press:
+	    		self.disabled = True;
+	    	on_release:
+	    		app.myCommand.execute('s3')
+	    		app.updateScannerStatus()
+				app.root.updateScannerStatus(app.scannerStatus)
+				CONNECTED.disabled = False;
+	    	pos_hint: {"x": 0.65, "top":0.575}
+		Button:
+			text: "Back to Demo Menu"
+			on_release: app.root.current = "DemoMenu"
+			pos_hint: {"x":0.65, "top":0.40}
 
-	    Button
-	    	on_release: app.root.register()
-	    	pos: 50, 40
-	    	font_size: 30
-	    	width: sp(200)
-	    	text: "Register"
+<CustomerStart>:
+	#canvas:
+	#	Ellipse:
+	#		pos: root.center_x-150, root.center_y-150
+	#		size: 300, 300
+	#		source: 'data/logo/kivy-icon-512.png'
+	#		angle_start: 0
+	#		angle_end: 360
+	title: TITLE
+	FloatLayout:
+		Button:
+			text: "Touch to Begin"
+			color: (1,1,1,1)
+			font_size: 30
+			background_color: (0,0,0,0)
+			size_hint: (None, None)
+			size: (300,300)
+			pos_hint: {'center_x':0.5, 'center_y':0.5}
+			on_press: app.root.deanimate()
+			Image:
+				source: 'data/logo/kivy-icon-512.png'
+				size: (300,300)
+				opacity: 0.5
+				pos: self.parent.pos
+		Title:
+			id: TITLE
+			text: "Welcome to G16's Self-Server Kiosk"
 
-<InsertCard>:
-	name: "insertcard"
-	Button:
-		on_release: app.root.current = "adminmenu"
-		text: "To Admin Menu"
-		font_size: 50
+<CustomerMenu>:
+	FloatLayout:
+		Title:
+			text: "Self-Serve E-Pass Kiosk"
+		CLabel:
+			text: "Describe yourself:"
+			pos_hint: {'center_x':0.5, 'center_y':0.75}
+			text_size: root.width-150, None
+			font_size: 25
+		CAttr:
+			text: "You will be able to:"
+			pos_hint: {'center_x':0.675, 'center_y':0.75}
+			text_size: (root.width-150)*2/3, None
+			font_size: 25
+			halign: 'center'
+		Button:
+			text: "New Pass User"
+			on_release: 
+				app.root.current = "CustomerInsertBlank"
+				app.scannerPoll()
+			pos_hint: {"center_x": 0.225, 'center_y': 0.6}
+		Button:
+			text: "Existing Pass User"
+			on_release: 
+				app.root.current = "CustomerInsertExist"
+				app.scannerPoll()
+			pos_hint: {"center_x": 0.225, 'center_y': 0.4}
+		Button:
+			text: "Lost/Broken Pass User"
+			on_release:
+				app.myCommand.execute('77');
+				app.root.current = "CustomerDelete"
+			pos_hint: {"center_x": 0.225, 'center_y': 0.2}
+		CAttr:
+			text: "Register a blank card into the pass system."
+			pos_hint: {'center_x':0.675, 'center_y':0.6}
+			text_size: (root.width-150)*2/3, None
+			font_size: 18
+			halign: 'center'
+		CAttr:
+			text: "Check account info (CID, Email, Balance).\nUpdate balance."
+			pos_hint: {'center_x':0.675, 'center_y':0.4}
+			text_size: (root.width-150)*2/3, None 
+			font_size: 18
+			halign: 'center'
+		CAttr:
+			text: "Remove pass from database."
+			pos_hint: {'center_x':0.675, 'center_y':0.2}
+			text_size: (root.width-150)*2/3, None
+			font_size: 18
+			halign: 'center'
+		DemoButton:
+			text: "Demo Menu"
+			on_release: app.root.current = "DemoMenu"
+			pos_hint: {"center_x": 0.875, 'center_y': 0.1}
 
-<NewCustomerMenu>:
-	name: "newcustomermenu"
-	Button:
-		on_release: app.root.current = "adminmenu"
-		text: "To Admin Menu"
-		font_size: 50
+<CustomerInsertBlank>:
+	FloatLayout:
+		Title:
+			text: "Please Tap Blank Pass"
+		CLabel:
+			text: root.message_label
+			pos_hint: {'center_x':0.5, 'center_y':0.75}
+			text_size: root.width-150, None
+			font_size: 25
+		Button:
+			text: "Cancel"
+			on_release:
+				app.root.current = "CustomerMenu"
+				app.root.updateMessageLabel("")
+			pos_hint: {"center_x": 0.775, 'center_y': 0.2}
 
-<ExistingCustomerMenu>:
-	name: "existingcustomermenu"
-	Button:
-		on_release: app.root.current = "adminmenu"
-		text: "To Admin Menu"
-		font_size: 50
+<CustomerInsertExist>:
+	FloatLayout:
+		Title:
+			text: "Please Tap Existing Pass"
+		CLabel:
+			text: root.message_label
+			pos_hint: {'center_x':0.5, 'center_y':0.75}
+			text_size: root.width-150, None
+			font_size: 25
+		Button:
+			text: "Cancel"
+			on_release: 
+				app.root.current = "CustomerMenu"
+				app.root.updateMessageLabel("")
+			pos_hint: {"center_x": 0.225, 'center_y': 0.2}
 
-<BalanceUpdate>:
-	name: "balanceupdate"
-	Button:
-		on_release: app.root.current = "adminmenu"
-		text: "To Admin Menu"
-		font_size: 50
+<CustomerMenuExist>:
+	FloatLayout:
+		Title:
+			text: "Please Tap Pass"
+		#Button:
+		#	text: "Update Balance"
+		#	on_release: 
+		#		app.createCacheObject()
+		#		app.getCustomerFromCache(app.CID)
+		#		app.root.updateCustomerLabels(app.CID, app.balance, app.email)
+		#	pos_hint: {"x":0.65, "top":0.3}
+
+<CustomerInfo>:
+	FloatLayout:
+		Title:
+			text: "Account Information"
+		CLabel:
+			text: root.message_label
+			pos_hint: {'center_x':0.5, 'center_y':0.7}
+			text_size: root.width-150, None
+			font_size: 28
+		CLabel:
+			text: "CID"			
+			pos_hint: {'center_x':0.5, 'center_y':0.625}
+			text_size: root.width-150, None
+		CLabel:
+			text: "Current Balance"
+			pos_hint: {'center_x':0.5, 'center_y':0.550}
+			text_size: root.width-150, None
+		CLabel:
+			text: "Active Device"
+			pos_hint: {'center_x':0.5, 'center_y':0.475}
+			text_size: root.width-150, None
+		CLabel:
+			text: "Email"
+			pos_hint: {'center_x':0.5, 'center_y':0.400}
+			text_size: root.width-150, None
+		CAttr:
+			id: CID
+			text: root.cid_label
+			pos_hint: {'center_x':0.5, 'center_y':0.625}
+			text_size: root.width-150, None
+			halign: 'right'
+		CAttr:
+			id: BALANCE
+			text: root.balance_label
+			pos_hint: {'center_x':0.5, 'center_y':0.55}
+			text_size: root.width-150, None
+			halign: 'right'
+		CAttr:
+			id: DEVICE
+			text: root.device_label
+			pos_hint: {'center_x':0.5, 'center_y':0.475}
+			text_size: root.width-150, None
+			halign: 'right'
+		CAttr:
+			id: EMAIL
+			text: root.email_label
+			pos_hint: {'center_x':0.5, 'center_y':0.4}
+			text_size: root.width-150, None
+			halign: 'right'
+		Button
+			text: "Update Balance"
+			on_release: app.root.current = "CustomerUpdateBalance"
+			pos_hint: {"center_x": 0.225, 'center_y': 0.2}
+		Button:
+			text: "Back to Menu"
+			on_release:
+				app.root.updateCustomerLabels('0', '0.00', '', '', '0')
+				app.root.current = "CustomerMenu"
+			pos_hint: {"center_x": 0.775, 'center_y': 0.2}
+
+<CustomerRegisterPay>:
+	FloatLayout:
+		Title:
+			text: "Select Payment Option"
+		CLabel:
+			text: "Purchase Amount:"
+			pos_hint: {'center_x':0.5, 'center_y':0.7}
+			text_size: root.width-150, None
+		CAttr:
+			id: PURCHASE
+			text: '$' + root.purchase_label
+			pos_hint: {'center_x':0.5, 'center_y':0.7}
+			text_size: root.width-150, None
+			halign: 'right'
+		CLabel:
+			text: "E-mail"
+			pos_hint: {'center_x':0.5, 'center_y':0.6}
+			text_size: root.width-150, None
+		CAttr:
+			id: EMAIL
+			text: root.email_label
+			pos_hint: {'center_x':0.5, 'center_y':0.6}
+			text_size: root.width-150, None
+			halign: 'right'
+		CLabel:
+			text: "Payment Method:"
+			pos_hint: {'center_x':0.5, 'center_y':0.5}
+			text_size: root.width-150, None
+		Button:
+			text: "Visa/MasterCard"
+			on_release:
+				app.register(EMAIL.text, PURCHASE.text[1:]);
+				app.root.current = "CustomerMenuExist";
+			pos_hint: {"center_x": 0.775, 'center_y': 0.45}
+		Button:
+			text: "Debit"
+			on_release:
+				app.register(EMAIL.text, PURCHASE.text[1:]);
+				app.root.current = "CustomerMenuExist"
+			pos_hint: {"center_x": 0.775, 'center_y': 0.2}
+
+<CustomerUpdatePay>:
+	FloatLayout:
+		Title:
+			text: "Select Payment Option"
+		CLabel:
+			text: "Purchase Amount:"
+			pos_hint: {'center_x':0.5, 'center_y':0.7}
+			text_size: root.width-150, None
+		CAttr:
+			id: PURCHASE
+			text: '$' + root.purchase_label
+			pos_hint: {'center_x':0.5, 'center_y':0.7}
+			text_size: root.width-150, None
+			halign: 'right'
+		CLabel:
+			text: "E-mail"
+			pos_hint: {'center_x':0.5, 'center_y':0.6}
+			text_size: root.width-150, None
+		CAttr:
+			id: EMAIL
+			text: root.email_label
+			pos_hint: {'center_x':0.5, 'center_y':0.6}
+			text_size: root.width-150, None
+			halign: 'right'
+		CLabel:
+			text: "Payment Method:"
+			pos_hint: {'center_x':0.5, 'center_y':0.5}
+			text_size: root.width-150, None
+		Button:
+			text: "Visa/MasterCard"
+			on_release:
+				app.update(PURCHASE.text[1:])
+				app.root.current = "CustomerMenuExist"	
+			pos_hint: {"center_x": 0.775, 'center_y': 0.45}
+		Button:
+			text: "Debit"
+			on_release:
+				app.update(PURCHASE.text[1:])
+				app.root.current = "CustomerMenuExist"
+			pos_hint: {"center_x": 0.775, 'center_y': 0.2}
+
+<CustomerRegister>:
+	FloatLayout:
+		Title:
+			text: "Registering New Pass"
+		CLabel:
+			text: "E-mail"
+			pos_hint: {'center_x':0.5, 'center_y':0.7}
+			text_size: root.width-150, None
+		CLabel:
+			text: "Initial Balance"
+			pos_hint: {'center_x':0.5, 'center_y':0.6}
+			text_size: root.width-150, None
+		CLabel:
+			text: root.message_label
+			pos_hint: {'center_x':0.5, 'center_y':0.5}
+			text_size: root.width-150, None
+		CInput:
+			id: EMAIL
+			text: '@myumanitoba.ca'
+			pos_hint: {'center_x':0.6, 'center_y':0.7}
+			size: root.width*6/10, 45
+			halign: 'right'
+		CLabel:
+			id: PURCHASE
+			pos_hint: {'center_x':0.67, 'center_y':0.6}
+			text: root.purchase_label
+			size: root.width/6, 45
+			halign: 'right'
+		BalIncr:
+			text: "-20"
+			pos_hint: {'center_x':0.47, 'center_y':0.6}
+			on_press: 
+				app.root.decrement(PURCHASE.text, 20, 'CustomerRegister');
+				if float(PURCHASE.text) == 0: PAY.disabled = True
+		BalIncr:
+			text: "-5"
+			pos_hint: {'center_x':0.545, 'center_y':0.6}
+			on_press: 
+				app.root.decrement(PURCHASE.text, 5, 'CustomerRegister');
+				if float(PURCHASE.text) == 0: PAY.disabled = True
+		BalIncr:
+			text: "+5"
+			pos_hint: {'center_x':0.795, 'center_y':0.6}
+			on_press: 
+				app.root.increment(PURCHASE.text, 5, 'CustomerRegister');
+				PAY.disabled = False
+		BalIncr:
+			text: "+20"
+			pos_hint: {'center_x':0.87, 'center_y':0.6}
+			on_press: 
+				app.root.increment(PURCHASE.text, 20, 'CustomerRegister');
+				PAY.disabled = False
+		BalIncr:
+			text: "Reset"
+			pos_hint: {'center_x':0.67, 'center_y':0.5175}
+			size_hint: 0.16, 0.07
+			on_press: 
+				app.root.decrement(PURCHASE.text, int(float(PURCHASE.text)), 'CustomerRegister');
+				PAY.disabled = True
+		Button:
+			id: PAY
+			text: "Pay Screen"
+			disabled: True
+			on_release: 
+				if app.isEmailInCache(EMAIL.text)==False: app.root.current = "CustomerRegisterPay";
+				else: app.root.updateMessageLabel("E-mail is already in use.")
+				app.root.updatePayLabels(PURCHASE.text, EMAIL.text)
+				
+			pos_hint: {"center_x": 0.225, 'center_y': 0.2}
+		Button:
+			text: "Cancel"
+			on_release: 
+				app.root.current = "CustomerMenu"
+				app.root.updateMessageLabel("")
+				EMAIL.text = ""
+			pos_hint: {"center_x": 0.775, 'center_y': 0.2}
+
+<CustomerUpdateBalance>:
+	FloatLayout:
+		Title:
+			text: "Updating Balance"
+		CLabel:
+			text: "CID"			
+			pos_hint: {'center_x':0.5, 'center_y':0.7}
+			text_size: root.width-150, None
+		CLabel:
+			text: "Current Balance"
+			pos_hint: {'center_x':0.5, 'center_y':0.625}
+			text_size: root.width-150, None
+		CLabel:
+			text: "Email"
+			pos_hint: {'center_x':0.5, 'center_y':0.55}
+			text_size: root.width-150, None
+		CLabel:
+			text: "Purchase"
+			pos_hint: {'center_x':0.5, 'center_y':0.475}
+			text_size: root.width-150, None
+		CAttr:
+			id: CID
+			text: root.cid_label
+			pos_hint: {'center_x':0.5, 'center_y':0.7}
+			text_size: root.width-150, None
+			halign: 'right'
+		CAttr:
+			id: BALANCE
+			text: root.balance_label
+			pos_hint: {'center_x':0.5, 'center_y':0.625}
+			text_size: root.width-150, None
+			halign: 'right'
+		CAttr:
+			id: EMAIL
+			text: root.email_label
+			pos_hint: {'center_x':0.5, 'center_y':0.55}
+			text_size: root.width-150, None
+			halign: 'right'
+		CLabel:
+			id: PURCHASE
+			pos_hint: {'center_x':0.67, 'center_y':0.45}
+			text: root.purchase_label
+			size: root.width/6, 45
+			halign: 'right'
+		BalIncr:
+			text: "-20"
+			pos_hint: {'center_x':0.47, 'center_y':0.45}
+			on_press: 
+				app.root.decrement(PURCHASE.text, 20, 'CustomerUpdateBalance');
+				if float(PURCHASE.text) == 0: PAY.disabled = True
+		BalIncr:
+			text: "-5"
+			pos_hint: {'center_x':0.545, 'center_y':0.45}
+			on_press: 
+				app.root.decrement(PURCHASE.text, 5, 'CustomerUpdateBalance');
+				if float(PURCHASE.text) == 0: PAY.disabled = True
+		BalIncr:
+			text: "+5"
+			pos_hint: {'center_x':0.795, 'center_y':0.45}
+			on_press: 
+				app.root.increment(PURCHASE.text, 5, 'CustomerUpdateBalance');
+				PAY.disabled = False
+		BalIncr:
+			text: "+20"
+			pos_hint: {'center_x':0.87, 'center_y':0.45}
+			on_press: 
+				app.root.increment(PURCHASE.text, 20, 'CustomerUpdateBalance');
+				PAY.disabled = False
+		BalIncr:
+			text: "Reset"
+			pos_hint: {'center_x':0.67, 'center_y':0.3675}
+			size_hint: 0.16, 0.07
+			on_press: 
+				app.root.decrement(PURCHASE.text, int(float(PURCHASE.text)), 'CustomerUpdateBalance');
+				PAY.disabled = True
+		Button:
+			id: PAY
+			text: "Pay Screen"
+			disabled: True
+			on_release: 
+				app.root.updatePayLabels(PURCHASE.text, EMAIL.text)
+				if float(PURCHASE.text) > 0: app.root.current = "CustomerUpdatePay";
+				else: pass
+			pos_hint: {"center_x": 0.225, 'center_y': 0.2}
+		Button:
+			text: "Back to Menu"
+			on_release:
+				app.root.updateCustomerLabels('0', '0.00', '', '', '0')
+				EMAIL.text = ""
+				app.root.current = "CustomerMenu"
+			pos_hint: {"center_x": 0.775, 'center_y': 0.2}
+
+<CustomerDelete>:
+	FloatLayout:
+		Title:
+			text: "Lost or Broken Pass"
+		CLabel:
+			text: "E-mail"
+			pos_hint: {'center_x':0.5, 'center_y':0.6}
+			text_size: root.width-150, None
+		CInput:
+			id: EMAIL
+			text: ''
+			pos_hint: {'center_x':0.6, 'center_y':0.6}
+			size: root.width*6/10, 45
+			halign: 'right'
+		CLabel:
+			text: root.message_label
+			pos_hint: {'center_x':0.5, 'center_y':0.4}
+			text_size: root.width-150, None
+		Button:
+			text: "Delete Pass"
+			on_release:
+				if app.isEmailInCache(EMAIL.text)==True: app.delete(EMAIL.text); app.root.updateMessageLabel("Pass has been successfully removed."); app.myCommand.execute('77');
+				else: app.root.updateMessageLabel("E-mail is not in the database.")
+				app.updateCIDValue('0');
+				EMAIL.text = ""
+			pos_hint: {"center_x": 0.225, 'center_y': 0.2}
+		Button:
+			text: "Back to Menu"
+			on_release:
+				app.root.updateCustomerLabels('0', '0.00', '', '', '0')
+				app.root.current = "CustomerMenu"
+			pos_hint: {"center_x": 0.775, 'center_y': 0.2}

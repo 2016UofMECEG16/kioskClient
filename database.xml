@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Data>
+	<Customer>
+		<CID>101294899</CID>
+		<Dev>1</Dev>
+		<Balance>112.5</Balance>
+		<Email>alejoe@myumanitoba.ca</Email>
+		<LastUpdated>Mar 1 2016 21:12:41</LastUpdated>
+	</Customer>
+	<Customer>
+		<CID>697827745</CID>
+		<Dev>0</Dev>
+		<Balance>20</Balance>
+		<Email>villard@myumanitoba.ca</Email>
+		<LastUpdated>Jan 1 1970 10:10:10</LastUpdated>
+	</Customer>
+	<Customer>
+		<CID>1796000808</CID>
+		<Dev>1</Dev>
+		<Balance>22.5</Balance>
+		<Email>dominic.villar.ca@gmail.com</Email>
+		<LastUpdated>Mar 1 2016 21:52:24</LastUpdated>
+	</Customer>
+	<Customer>
+		<CID>1957435628</CID>
+		<Dev>0</Dev>
+		<Balance>52.5</Balance>
+		<Email>sevilljm@myumanitoba.ca</Email>
+		<LastUpdated>Mar 2 2016 13:48:04</LastUpdated>
+	</Customer>
+	<Customer>
+		<CID>2038757133</CID>
+		<Dev>0</Dev>
+		<Balance>17.5</Balance>
+		<Email>apuyam@myumanitoba.ca</Email>
+		<LastUpdated>Mar 1 2016 20:57:35</LastUpdated>
+	</Customer>
+</Data>

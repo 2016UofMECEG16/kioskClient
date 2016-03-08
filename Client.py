@@ -11,12 +11,14 @@ import threading
 from threading import Thread
 
 class Client(AbstractClient.AbstractClient):
-    
-    def __init__(self, host, port, myServerCommand):
-        super(Client, self)
-        self.myServerCommand = myServerCommand
-        Thread.__init__(self)
-        self._lock = threading.Lock()
+	
+	myUI = None
 
-    def handleMessageFromServer(self, theCommand):
-        self.myServerCommand.execute(self, theCommand)
+	def __init__(self, host, port, myServerCommand):
+		super(self.__class__, self).__init__(host, port)
+		self.myServerCommand = myServerCommand
+		Thread.__init__(self)
+		self._lock = threading.Lock()
+
+	def handleMessageFromServer(self, theCommand):
+		self.myServerCommand.execute(self, theCommand)

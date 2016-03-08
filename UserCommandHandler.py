@@ -11,43 +11,84 @@ import threading
 class UserCommandHandler:
 	myUI = None
 	myClient = None
+	muKiosk = None
+	Command = ''
+	host = ''
+	loginInfo = ''
+	connected = False
+	s_connected = False
 
-	def __init__(self, myUI, myClient):
+	def __init__(self, myUI, myClient, myKiosk):
 		self.myUI = myUI
 		self.myClient = myClient
-
+		self.myKiosk = myKiosk
 	def execute(self, theCommand):
-		msg = b''
-		temp = ""
+		action = theCommand[0:2]
+		self.Command = theCommand[1:]
 		takeaction = {
-			"1": self.start,
-		    "2": self.connect,
-		    "3": self.disconnect,
-		    "4": self.quit,
-		    "5": self.register}
-		takeaction.get(theCommand, self.errhandler)()    
+# TABLE OF TCP/IP CLIENT 
+			"77": self.send,
+			"c1": self.start,
+		    "c2": self.connect,
+		    "c3": self.disconnect,
+		    "c4": self.send,
+		    "c5": self.send,
+		    "c6": self.send,
+		    "c7": self.setHost,
+		    "c8": self.serverLogin,
+		    "c0": self.quit,
+		    "C1": self.send,
+# TABLE OF SCANNER COMMANDS
+			"s1": self.scannerStart,
+		    "s2": self.scannerConnect,
+		    "s3": self.scannerDisconnect,
+		    "s4": self.scannerSend,
+		    "s5": self.scannerSend,
+# TABLE OF MESSAGES TO SCANNER
+			"S0": self.scannerSend, # BLANKS CARD
+		    "S1": self.scannerSend, # POLLS FOR CARD
+			"S2": self.scannerSend, # REGISTERS CARD
+			"S3": self.scannerSend  # UPDATES CARD
+			}
+		if action == 'c7':
+			self.host = theCommand[3:]
+		if action == 'c8':
+			self.loginInfo = theCommand[3:]
+		if action == 's4':
+			self.Command = theCommand[3:]
+		takeaction.get(action, self.errhandler)()    
 
+# COMMANDS TO CONTROL TCP/IP CLIENT
 	def start (self):
 		self.myClient.startClient()
-		self.myUI.display("User: Client socket opened.")
-
 	def connect (self):
-	    self.myUI.display("User: Connecting client to Server...")
-	    self.myClient.connect()
-	    self.myUI.display("User: Connection to server established.")
-
+		self.myClient.connect()
+		self.connected = True
 	def disconnect (self):
-	    self.myUI.display("User: Disconnecting client from Server...")
-	    self.myClient.disconnect()
-	    self.myUI.display("User: Disconnected from Server.")
-
+		self.myClient.disconnect()
+		self.connected = False
+	def send (self):
+		self.myClient.sendMessageToServer(self.Command)
+	def setHost(self):
+		self.myClient.setHost(self.host)
+	def serverLogin(self):
+		self.myClient.sendMessageToServer(self.loginInfo)
 	def quit (self):
 		self.myClient.stopClient()
-		self.myUI.display("User: Quitting program.")
-		sys.exit(0)
+		self.myUI.exit()
 
-	def register (self, line):
-		self.myClient.sendMessageToServer(line)
+# COMMANDS TO CONTROL SCANNER
+	def scannerStart (self):
+		self.myKiosk.startClient()
+	def scannerConnect (self):
+		self.myKiosk.connect()
+		self.s_connected = True
+	def scannerDisconnect (self):
+		self.myKiosk.disconnect()
+		self.s_connected = False
+	def scannerSend (self):
+		self.myKiosk.sendMessageToScanner(self.Command)
 
+# COMMANDS FOR DEBUGGING
 	def errhandler (self):
-		self.myUI.display("User: Your input has not been recognised")
+		print "User: Your input has not been recognised"
